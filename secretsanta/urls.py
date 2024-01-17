@@ -16,12 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')), #browsable API
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'), #Simple JWT
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),#Simple JWT
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'), # Simple JWT, allow API users to verify HMAC-signed tokens without having access to your signing key
 ]
