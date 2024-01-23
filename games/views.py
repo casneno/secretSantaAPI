@@ -1,10 +1,15 @@
-from django.shortcuts import render, HttpResponse
-from .models import Card
+from django.http import JsonResponse
+from .models import GameSession, Card
+from .serializers import GameSerializer, CardSerializer
+from rest_framework.decorators import api_view
 
 # Create your views here.
-def home(request):
-    return render(request, "home.html")
-
-def session(request):
+@api_view(['GET', 'POST'])
+def card_list(request):
     cards = Card.objects.all()
-    return render(request, "session.html", {"cards": cards})
+    serializer = CardSerializer(cards, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+def game_session(request):
+    session = GameSession.objects.all()
+    GameSerializer(session)
